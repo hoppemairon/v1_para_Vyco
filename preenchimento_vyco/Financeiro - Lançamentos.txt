@@ -1,0 +1,13 @@
+Coluna	Tipo	Obrigatório	Descrição
+Confirmado	boolean	Não	Utilizar "Sim" para lançamentos confirmados, ou "Não" e vazio para lançamentos não confirmados
+Data Emissão	string,null	Não	Data de emissão
+Data	string	Sim	Data de vencimento
+Valor Emissão	number,null	Não	Valor de emissão
+Valor	number	Sim	Valor de vencimento
+Repetição	integer	Não	Utilizar o número correspondente para cada tipo, sendo: 0 - Única, 1 - Semanal, 2 - Mensal ou 3 - Anual
+Total Parcelas	integer	Não	Total de parcelas
+Descrição	string,null	Não	Descrição
+Categoria	string	Sim	Categoria
+Centro de Custo	string,null	Não	Centro de Custo
+Conta Corrente	string,null	Não	Conta corrente
+Contato	string,null	Não	Contato

@@ -1,0 +1,53 @@
+# Pastas temporárias (não devem existir mais na versão nuvem)
+planilhas_geradas*/
+planilhas_geradas*/*.xlsx
+planilhas_geradas*/*.xls
+logs/*.log
+logs/*.txt
+logs/*.xlsx
+
+# Arquivos temporários
+*.tmp
+*.temp
+~$*.xlsx
+~$*.xls
+
+# Diretórios de cache Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Ambientes virtuais
+venv/
+env/
+ENV/
+.venv/
+
+# Arquivos do VS Code
+.vscode/
+*.code-workspace
+
+# Arquivos do Windows
+Thumbs.db
+Desktop.ini
+
+# Arquivos do macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs
+*.log
+
+# Arquivos de backup
+backup_*.xlsx
+relatorio_conversao_*.txt
+
+# Arquivos de configuração local
+config_local.py
+.env
+
+# Arquivos de teste temporários
+teste_saida/
+temp_files/

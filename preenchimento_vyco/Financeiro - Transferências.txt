@@ -1,0 +1,6 @@
+Coluna	Tipo	Obrigatório	Descrição
+Data	string	Sim	Data da transferência
+Valor	number	Sim	Valor da transferência
+Descrição	string,null	Não	Descrição
+Conta Débito	string	Sim	Conta de débito
+Conta Crédito	string	Sim	Conta de crédito

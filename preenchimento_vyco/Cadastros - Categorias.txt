@@ -1,0 +1,11 @@
+Coluna	Tipo	Obrigatório	Descrição
+Código	string	Sim	Código
+Nome	string	Sim	Nome da categoria
+Código Pai	string	Sim	Código da categoria Pai
+Competência por Parcela	boolean	Não	Competência por parcela
+Desconto %	number,null	Não	Desconto porcentagem
+Desconto R$	number,null	Não	Desconto valor
+Dias para vencimento	integer	Não	Dias para vencimento
+Gera Boleto	boolean	Não	Gera Boleto
+Gera Nota Fiscal	boolean	Não	Gera Nota Fiscal
+Gera Recibo	boolean	Não	Gera Recibo

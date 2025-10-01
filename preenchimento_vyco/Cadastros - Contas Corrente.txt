@@ -1,0 +1,5 @@
+Coluna	Tipo	Obrigatório	Descrição
+Nome	string	Sim	Nome da conta corrente
+Tipo	integer	Sim	Utilizar o número correspondente para cada tipo, sendo: 0 - Caixa, 1 - Conta Corrente ou 2 - Investimento
+Data Inicial	string	Sim	Data de início/abertura da conta corrente
+Valor Inicial	number	Sim	Valor inicial da conta corrente

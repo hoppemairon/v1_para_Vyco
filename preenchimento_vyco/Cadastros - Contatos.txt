@@ -1,0 +1,12 @@
+Coluna	Tipo	Obrigatório	Descrição
+Nome	string	Sim	Nome do contato
+Tipo	integer	Sim	Utilizar o número correspondente para cada tipo, sendo: 0 - Não Identificado, 1 - Pessoa Física ou 2 - Pessoa Jurídica
+Documento	string,null	Não	Número do documento correspondente ao tipo
+E-mail	string,null	Não	E-mail
+Enviar e-mail?	boolean	Não	Permitir o envio de e-mail para o contato?
+Telefone Residencial	string,null	Não	Telefone Residencial
+Telefone Comercial	string,null	Não	Telefone Comercial
+Telefone Celular	string,null	Não	Telefone Celular
+Contribuinte ICMS?	boolean	Não	Contribuinte do ICMS? (somente pessoa jurídica)
+Inscrição Estadual	string,null	Não	Inscrição Estadual (somente pessoa jurídica)
+Inscrição Municipal	string,null	Não	Inscrição Municipal (somente pessoa jurídica)

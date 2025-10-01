@@ -1,0 +1,2 @@
+Coluna	Tipo	Obrigatório	Descrição
+Nome	string	Sim	Nome do centro de custo
