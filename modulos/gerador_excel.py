@@ -300,11 +300,9 @@ class GeradorExcel:
         else:
             dados_formatados['Data Inicial'] = ''  # Vazio por padrão
         
-        # Preservar Data Inicial original (não alterar dados do usuário)
+        # Preservar Data Inicial original formatada para padrão brasileiro
         if 'Data Inicial' in dados_formatados.columns:
-            # Apenas padronizar formato, preservar vazias
-            dados_formatados['Data Inicial'] = dados_formatados['Data Inicial'].astype(str)
-            dados_formatados.loc[dados_formatados['Data Inicial'].isin(['', 'nan', 'None', 'NaT']), 'Data Inicial'] = ''
+            dados_formatados['Data Inicial'] = dados_formatados['Data Inicial'].apply(self._formatar_data_brasileira)
         
         # Adicionar Valor Inicial
         dados_formatados['Valor Inicial'] = 0.0  # Zero por padrão
@@ -349,12 +347,12 @@ class GeradorExcel:
         """Formata dados de lançamentos conforme modelo Vyco"""
         dados_formatados = dados.copy()
         
-        # Garantir formato de data (PRESERVANDO dados originais)
+        # Formatar datas para o padrão brasileiro (dd/mm/yyyy)
         if 'Data' in dados_formatados.columns:
-            # Tentar padronizar formato apenas para datas válidas, preservar vazias
-            dados_formatados['Data'] = dados_formatados['Data'].astype(str)
-            # Se estiver vazio/NaN, manter vazio
-            dados_formatados.loc[dados_formatados['Data'].isin(['', 'nan', 'None', 'NaT']), 'Data'] = ''
+            dados_formatados['Data'] = dados_formatados['Data'].apply(self._formatar_data_brasileira)
+        
+        if 'Data Emissão' in dados_formatados.columns:
+            dados_formatados['Data Emissão'] = dados_formatados['Data Emissão'].apply(self._formatar_data_brasileira)
         
         # Garantir formato de valor
         if 'Valor' in dados_formatados.columns:
@@ -387,12 +385,9 @@ class GeradorExcel:
         """Formata dados de transferências conforme modelo Vyco"""
         dados_formatados = dados.copy()
         
-        # Garantir formato de data (PRESERVANDO dados originais)
+        # Formatar datas para o padrão brasileiro (dd/mm/yyyy)
         if 'Data' in dados_formatados.columns:
-            # Tentar padronizar formato apenas para datas válidas, preservar vazias
-            dados_formatados['Data'] = dados_formatados['Data'].astype(str)
-            # Se estiver vazio/NaN, manter vazio
-            dados_formatados.loc[dados_formatados['Data'].isin(['', 'nan', 'None', 'NaT']), 'Data'] = ''
+            dados_formatados['Data'] = dados_formatados['Data'].apply(self._formatar_data_brasileira)
         
         # Garantir formato de valor
         if 'Valor' in dados_formatados.columns:
@@ -411,6 +406,47 @@ class GeradorExcel:
         dados_formatados = dados_formatados[colunas_esperadas]
         
         return dados_formatados
+    
+    def _formatar_data_brasileira(self, data):
+        """
+        Formata data para o padrão brasileiro (dd/mm/yyyy)
+        
+        Args:
+            data: Data em qualquer formato válido
+            
+        Returns:
+            str: Data formatada em dd/mm/yyyy ou string vazia se inválida
+        """
+        try:
+            # Se já é string vazia ou None, retorna vazio
+            if pd.isna(data) or data == '' or str(data).lower() in ['nan', 'none', 'nat']:
+                return ''
+            
+            # Converter para datetime se necessário
+            if isinstance(data, str):
+                # Tentar diferentes formatos de entrada
+                for formato in ['%d/%m/%Y', '%Y-%m-%d', '%m/%d/%Y', '%d-%m-%Y']:
+                    try:
+                        data_obj = pd.to_datetime(data, format=formato)
+                        break
+                    except:
+                        continue
+                else:
+                    # Se nenhum formato funcionou, tentar conversão automática
+                    data_obj = pd.to_datetime(data, errors='coerce')
+            else:
+                data_obj = pd.to_datetime(data, errors='coerce')
+            
+            # Se a conversão falhou, retornar vazio
+            if pd.isna(data_obj):
+                return ''
+            
+            # Retornar no formato brasileiro
+            return data_obj.strftime('%d/%m/%Y')
+            
+        except:
+            # Em caso de erro, retornar vazio
+            return ''
     
     def _garantir_colunas(self, dados: pd.DataFrame, colunas_esperadas: List[str]) -> pd.DataFrame:
         """
