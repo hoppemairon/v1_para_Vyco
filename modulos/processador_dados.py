@@ -268,10 +268,17 @@ class ProcessadorDados:
         Returns:
             pd.DataFrame: Contatos no formato Vyco completo
         """
-        # Encontrar coluna de contato
-        colunas_contato = [col for col in dados_lancamentos.columns 
-                          if 'contato' in col.lower() or 'cliente' in col.lower() or 'fornecedor' in col.lower()]
+        # Encontrar coluna de contato com busca mais ampla
+        colunas_contato = []
+        for col in dados_lancamentos.columns:
+            col_lower = col.lower()
+            if any(palavra in col_lower for palavra in ['contato', 'cliente', 'fornecedor', 'pessoa', 'empresa']):
+                colunas_contato.append(col)
         
+        # Se não encontrou por nome, verificar se existe coluna 'Contato' diretamente
+        if not colunas_contato and 'Contato' in dados_lancamentos.columns:
+            colunas_contato = ['Contato']
+
         if not colunas_contato:
             # Retornar DataFrame vazio com todas as colunas necessárias
             return pd.DataFrame(columns=[
@@ -281,29 +288,33 @@ class ProcessadorDados:
             ])
         
         coluna_contato = colunas_contato[0]
-        
-        # Obter valores únicos
-        contatos_unicos = dados_lancamentos[coluna_contato].dropna().unique()
-        
+
+        # Obter valores únicos, removendo vazios e nulos
+        contatos_series = dados_lancamentos[coluna_contato].dropna()
+        contatos_series = contatos_series[contatos_series != '']  # Remover strings vazias
+        contatos_unicos = contatos_series.unique()
+
         # Criar DataFrame com estrutura completa do Vyco
         contatos_data = []
         for contato in contatos_unicos:
-            contatos_data.append({
-                'Nome': contato,
-                'Tipo': 0,  # 0 - Não Identificado (padrão)
-                'Documento': '',  # Vazio
-                'E-mail': '',  # Vazio
-                'Enviar e-mail?': False,  # Não
-                'Telefone Residencial': '',  # Vazio
-                'Telefone Comercial': '',  # Vazio
-                'Telefone Celular': '',  # Vazio
-                'Contribuinte ICMS?': False,  # Não
-                'Inscrição Estadual': '',  # Vazio
-                'Inscrição Municipal': ''  # Vazio
-            })
-        
+            # Ignorar valores nulos ou vazios
+            if pd.notna(contato) and str(contato).strip() != '':
+                contatos_data.append({
+                    'Nome': str(contato).strip(),
+                    'Tipo': 0,  # 0 - Não Identificado (padrão)
+                    'Documento': '',  # Vazio
+                    'E-mail': '',  # Vazio
+                    'Enviar e-mail?': False,  # Não
+                    'Telefone Residencial': '',  # Vazio
+                    'Telefone Comercial': '',  # Vazio
+                    'Telefone Celular': '',  # Vazio
+                    'Contribuinte ICMS?': False,  # Não
+                    'Inscrição Estadual': '',  # Vazio
+                    'Inscrição Municipal': ''  # Vazio
+                })
+
         return pd.DataFrame(contatos_data)
-    
+
     def _processar_lancamentos(self, dados_lancamentos: pd.DataFrame) -> pd.DataFrame:
         """
         Processa lançamentos do V1 para formato Vyco
