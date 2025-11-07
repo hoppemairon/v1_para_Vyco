@@ -211,7 +211,7 @@ class ProcessadorDados:
             contas_correntes = pd.DataFrame({
                 'Codigo': range(1, len(contas_unicas) + 1),
                 'Nome': contas_unicas,
-                'Tipo': 'Conta Corrente',
+                'Tipo': 1,
                 'Ativo': 'Sim',
                 'DataInicial': ''
             })
@@ -247,7 +247,7 @@ class ProcessadorDados:
             
             contas_com_data.append({
                 'Nome': conta,
-                'Tipo': 'Conta Corrente',
+                'Tipo': 1,
                 'Ativo': 'Sim',
                 'DataInicial': data_inicial_str
             })
