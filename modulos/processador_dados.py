@@ -304,11 +304,11 @@ class ProcessadorDados:
                     'Tipo': 0,  # 0 - Não Identificado (padrão)
                     'Documento': '',  # Vazio
                     'E-mail': '',  # Vazio
-                    'Enviar e-mail?': False,  # Não
+                    'Enviar e-mail?': '',  # Não
                     'Telefone Residencial': '',  # Vazio
                     'Telefone Comercial': '',  # Vazio
                     'Telefone Celular': '',  # Vazio
-                    'Contribuinte ICMS?': False,  # Não
+                    'Contribuinte ICMS?': '',  # Não
                     'Inscrição Estadual': '',  # Vazio
                     'Inscrição Municipal': ''  # Vazio
                 })
